@@ -37,7 +37,7 @@ class LocationMessage(WeChatMessage):
 
     @property
     def location(self):
-        return self.location_x, self.location_y
+        pass
 
 
 class LinkMessage(WeChatMessage):

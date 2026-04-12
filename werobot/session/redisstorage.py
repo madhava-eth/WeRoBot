@@ -50,8 +50,7 @@ class RedisStorage(SessionStorage):
         :param id: 要写入的 id
         :param value: 要写入的数据，可以是一个 ``dict`` 对象
         """
-        id = self.key_name(id)
-        self.redis.set(id, json_dumps(value))
+        pass
 
     def delete(self, id):
         """
@@ -59,5 +58,4 @@ class RedisStorage(SessionStorage):
 
         :param id: 要删除的数据的 id
         """
-        id = self.key_name(id)
-        self.redis.delete(id)
+        pass

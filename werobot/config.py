@@ -28,12 +28,7 @@ class Config(dict):
         :param filename: 配置文件的文件名
         :return: 如果读取成功，返回 ``True``，如果失败，会抛出错误异常
         """
-        d = types.ModuleType('config')
-        d.__file__ = filename
-        with open(filename) as config_file:
-            exec(compile(config_file.read(), filename, 'exec'), d.__dict__)
-        self.from_object(d)
-        return True
+        pass
 
     def from_object(self, obj):
         """
@@ -41,6 +36,4 @@ class Config(dict):
 
         :param obj: 一个 Python 对象
         """
-        for key in dir(obj):
-            if key.isupper():
-                self[key] = getattr(obj, key)
+        pass

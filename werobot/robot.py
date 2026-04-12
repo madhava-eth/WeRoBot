@@ -143,48 +143,19 @@ class BaseRoBot(object):
 
     @cached_property
     def crypto(self):
-        app_id = self.config.get("APP_ID", None)
-        if not app_id:
-            raise ConfigError(
-                "You need to provide app_id to encrypt/decrypt messages"
-            )
-
-        encoding_aes_key = self.config.get("ENCODING_AES_KEY", None)
-        if not encoding_aes_key:
-            raise ConfigError(
-                "You need to provide encoding_aes_key "
-                "to encrypt/decrypt messages"
-            )
-        self.use_encryption = True
-
-        from .crypto import MessageCrypt
-        return MessageCrypt(
-            token=self.config["TOKEN"],
-            encoding_aes_key=encoding_aes_key,
-            app_id=app_id
-        )
+        pass
 
     @cached_property
     def client(self):
-        return Client(self.config)
+        pass
 
     @cached_property
     def session_storage(self):
-        if self.config["SESSION_STORAGE"] is False:
-            return None
-        if not self.config["SESSION_STORAGE"]:
-            from .session.sqlitestorage import SQLiteStorage
-            self.config["SESSION_STORAGE"] = SQLiteStorage()
-        return self.config["SESSION_STORAGE"]
+        pass
 
     @session_storage.setter
     def session_storage(self, value):
-        warnings.warn(
-            "You should set session storage in config",
-            DeprecationWarning,
-            stacklevel=2
-        )
-        self.config["SESSION_STORAGE"] = value
+        pass
 
     def handler(self, f):
         """
@@ -197,274 +168,235 @@ class BaseRoBot(object):
         """
         为文本 ``(text)`` 消息添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='text')
-        return f
+        pass
 
     def image(self, f):
         """
         为图像 ``(image)`` 消息添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='image')
-        return f
+        pass
 
     def location(self, f):
         """
         为位置 ``(location)`` 消息添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='location')
-        return f
+        pass
 
     def link(self, f):
         """
         为链接 ``(link)`` 消息添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='link')
-        return f
+        pass
 
     def voice(self, f):
         """
         为语音 ``(voice)`` 消息添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='voice')
-        return f
+        pass
 
     def video(self, f):
         """
         为视频 ``(video)`` 消息添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='video')
-        return f
+        pass
 
     def shortvideo(self, f):
         """
         为小视频 ``(shortvideo)`` 消息添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='shortvideo')
-        return f
+        pass
 
     def unknown(self, f):
         """
         为未知类型 ``(unknown)`` 消息添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='unknown')
-        return f
+        pass
 
     def subscribe(self, f):
         """
         为被关注 ``(subscribe)`` 事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='subscribe_event')
-        return f
+        pass
 
     def unsubscribe(self, f):
         """
         为被取消关注 ``(unsubscribe)`` 事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='unsubscribe_event')
-        return f
+        pass
 
     def click(self, f):
         """
         为自定义菜单事件 ``(click)`` 事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='click_event')
-        return f
+        pass
 
     def scan(self, f):
         """
         为扫描推送 ``(scan)`` 事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='scan_event')
-        return f
+        pass
 
     def scancode_push(self, f):
         """
         为扫描推送 ``(scancode_push)`` 事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='scancode_push_event')
-        return f
+        pass
 
     def scancode_waitmsg(self, f):
         """
         为扫描弹消息 ``(scancode_waitmsg)`` 事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='scancode_waitmsg_event')
-        return f
+        pass
 
     def pic_sysphoto(self, f):
         """
         为弹出系统拍照发图的事件推送 ``(pic_sysphoto_event)`` 事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='pic_sysphoto_event')
-        return f
+        pass
 
     def pic_photo_or_album(self, f):
         """
         为弹出拍照或者相册发图的事件推送 ``(pic_photo_or_album_event)`` 事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='pic_photo_or_album_event')
-        return f
+        pass
 
     def pic_weixin(self, f):
         """
         为弹出微信相册发图器的事件推送 ``(pic_weixin_event)`` 事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='pic_weixin_event')
-        return f
+        pass
 
     def location_select(self, f):
         """
         为弹出地理位置选择器的事件推送 ``(location_select_event)`` 事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='location_select_event')
-        return f
+        pass
 
     def location_event(self, f):
         """
         为上报位置 ``(location_event)`` 事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='location_event')
-        return f
+        pass
 
     def view(self, f):
         """
         为链接 ``(view)`` 事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='view_event')
-        return f
+        pass
 
     def user_scan_product(self, f):
         """
         为打开商品主页事件推送 ``(user_scan_product_event)`` 事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='user_scan_product_event')
-        return f
+        pass
 
     def user_scan_product_enter_session(self, f):
         """
         为进入公众号事件推送 ``(user_scan_product_enter_session_event)`` 事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='user_scan_product_enter_session_event')
-        return f
+        pass
 
     def user_scan_product_async(self, f):
         """
         为地理位置信息异步推送 ``(user_scan_product_async_event)`` 事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='user_scan_product_async_event')
-        return f
+        pass
 
     def user_scan_product_verify_action(self, f):
         """
         为商品审核结果推送 ``(user_scan_product_verify_action_event)`` 事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='user_scan_product_verify_action_event')
-        return f
+        pass
 
     def card_pass_check(self, f):
         """
         为生成的卡券通过审核 ``(card_pass_check_event)`` 事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='card_pass_check_event')
-        return f
+        pass
 
     def card_not_pass_check(self, f):
         """
         为生成的卡券未通过审核 ``(card_not_pass_check_event)`` 事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='card_not_pass_check_event')
-        return f
+        pass
 
     def user_get_card(self, f):
         """
         为用户领取卡券 ``(user_get_card_event)`` 事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='user_get_card_event')
-        return f
+        pass
 
     def user_gifting_card(self, f):
         """
         为用户转赠卡券 ``(user_gifting_card_event)`` 事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='user_gifting_card_event')
-        return f
+        pass
 
     def user_del_card(self, f):
         """
         为用户删除卡券 ``(user_del_card_event)``  事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='user_del_card_event')
-        return f
+        pass
 
     def user_consume_card(self, f):
         """
         为卡券被核销 ``(user_consume_card_event)`` 事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='user_consume_card_event')
-        return f
+        pass
 
     def user_pay_from_pay_cell(self, f):
         """
         为微信买单完成 ``(user_pay_from_pay_cell_event)`` 事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='user_pay_from_pay_cell_event')
-        return f
+        pass
 
     def user_view_card(self, f):
         """
         为用户进入会员卡 ``(user_view_card_event)`` 事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='user_view_card_event')
-        return f
+        pass
 
     def user_enter_session_from_card(self, f):
         """
         为用户卡券里点击查看公众号进入会话 ``(user_enter_session_from_card_event)`` 事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='user_enter_session_from_card_event')
-        return f
+        pass
 
     def update_member_card(self, f):
         """
         为用户的会员卡积分余额发生变动 ``(update_member_card_event)`` 事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='update_member_card_event')
-        return f
+        pass
 
     def card_sku_remind(self, f):
         """
         为某个card_id的初始库存数大于200且当前库存小于等于100 ``(card_sku_remind_event)`` 事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='card_sku_remind_event')
-        return f
+        pass
 
     def card_pay_order(self, f):
         """
         为券点发生变动 ``(card_pay_order_event)`` 事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='card_pay_order_event')
-        return f
+        pass
 
     def submit_membercard_user_info(self, f):
         """
         为用户通过一键激活的方式提交信息并点击激活或者用户修改会员卡信息 ``(submit_membercard_user_info_event)``
         事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='submit_membercard_user_info_event')
-        return f
+        pass
 
     def templatesendjobfinish_event(self, f):
         """在模版消息发送任务完成后，微信服务器会将是否送达成功作为通知，发送到开发者中心中填写的服务器配置地址中
         """
-        self.add_handler(f, type='templatesendjobfinish_event')
-        return f
+        pass
 
     def unknown_event(self, f):
         """
         为未知类型 ``(unknown_event)`` 事件添加一个 handler 方法的装饰器。
         """
-        self.add_handler(f, type='unknown_event')
-        return f
+        pass
 
     def key_click(self, key):
         """
@@ -472,17 +404,7 @@ class BaseRoBot(object):
 
         **@key_click('KEYNAME')** 用来为特定 key 的点击事件添加 handler 方法。
         """
-        def wraps(f):
-            argc = len(signature(f).parameters.keys())
-
-            @self.click
-            def onclick(message, session=None):
-                if message.key == key:
-                    return f(*[message, session][:argc])
-
-            return f
-
-        return wraps
+        pass
 
     def filter(self, *args):
         """
@@ -491,11 +413,7 @@ class BaseRoBot(object):
         使用 ``@filter("xxx")``, ``@filter(re.compile("xxx"))``
         或 ``@filter("xxx", "xxx2")`` 的形式为特定内容添加 handler。
         """
-        def wraps(f):
-            self.add_filter(func=f, rules=list(args))
-            return f
-
-        return wraps
+        pass
 
     def add_handler(self, func, type='all'):
         """
@@ -523,35 +441,7 @@ class BaseRoBot(object):
         :param rules: 一个 list，包含要匹配的字符串或者正则表达式。
         :return: None
         """
-        if not callable(func):
-            raise ValueError("{} is not callable".format(func))
-        if not isinstance(rules, list):
-            raise ValueError("{} is not list".format(rules))
-        if len(rules) > 1:
-            for x in rules:
-                self.add_filter(func, [x])
-        else:
-            target_content = rules[0]
-            if isinstance(target_content, str):
-                target_content = to_text(target_content)
-
-                def _check_content(message):
-                    return message.content == target_content
-            elif is_regex(target_content):
-
-                def _check_content(message):
-                    return target_content.match(message.content)
-            else:
-                raise TypeError("%s is not a valid rule" % target_content)
-            argc = len(signature(func).parameters.keys())
-
-            @self.text
-            def _f(message, session=None):
-                _check_result = _check_content(message)
-                if _check_result:
-                    if isinstance(_check_result, bool):
-                        _check_result = None
-                    return func(*[message, session, _check_result][:argc])
+        pass
 
     def parse_message(
         self, body, timestamp=None, nonce=None, msg_signature=None
@@ -641,8 +531,7 @@ class BaseRoBot(object):
                 return "<h1>喵喵喵 %s 不是给麻瓜访问的快走开</h1>" % url
 
         """
-        self.make_error_page = f
-        return f
+        pass
 
 
 class WeRoBot(BaseRoBot):
@@ -652,14 +541,7 @@ class WeRoBot(BaseRoBot):
     """
     @cached_property
     def wsgi(self):
-        if not self._handlers:
-            raise RuntimeError('No Handler.')
-        from bottle import Bottle
-        from werobot.contrib.bottle import make_view
-
-        app = Bottle()
-        app.route('<t:path>', ['GET', 'POST'], make_view(self))
-        return app
+        pass
 
     def run(
         self, server=None, host=None, port=None, enable_pretty_logging=True
@@ -673,16 +555,4 @@ class WeRoBot(BaseRoBot):
         :param port: 运行时绑定的主机端口
         :param enable_pretty_logging: 是否开启 log 的输出格式优化
         """
-        if enable_pretty_logging:
-            from werobot.logger import enable_pretty_logging
-            enable_pretty_logging(self.logger)
-        if server is None:
-            server = self.config["SERVER"]
-        if host is None:
-            host = self.config["HOST"]
-        if port is None:
-            port = self.config["PORT"]
-        try:
-            self.wsgi.run(server=server, host=host, port=port)
-        except KeyboardInterrupt:
-            exit(0)
+        pass

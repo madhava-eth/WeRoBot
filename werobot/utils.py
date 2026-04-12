@@ -35,19 +35,11 @@ def check_signature(token, timestamp, nonce, signature):
 
 
 def check_token(token):
-    return re.match('^[A-Za-z0-9]{3,32}$', token)
+    pass
 
 
 def cached_property(method):
-    prop_name = '_{}'.format(method.__name__)
-
-    @wraps(method)
-    def wrapped_func(self, *args, **kwargs):
-        if not hasattr(self, prop_name):
-            setattr(self, prop_name, method(self, *args, **kwargs))
-        return getattr(self, prop_name)
-
-    return property(wrapped_func)
+    pass
 
 
 def to_text(value, encoding="utf-8") -> str:
@@ -98,7 +90,7 @@ def json_loads(s):
 
 
 def json_dumps(d):
-    return json.dumps(d)
+    pass
 
 
 def pay_sign_dict(
@@ -112,31 +104,7 @@ def pay_sign_dict(
     """
     支付参数签名
     """
-    assert pay_sign_key, "PAY SIGN KEY IS EMPTY"
-
-    if add_appid:
-        kwargs.update({'appid': appid})
-
-    if add_noncestr:
-        kwargs.update({'noncestr': generate_token()})
-
-    if add_timestamp:
-        kwargs.update({'timestamp': int(time.time())})
-
-    params = kwargs.items()
-
-    _params = [
-        (k.lower(), v) for k, v in kwargs.items() if k.lower() != "appid"
-    ]
-    _params += [('appid', appid), ('appkey', pay_sign_key)]
-    _params.sort()
-
-    sign = '&'.join(["%s=%s" % (str(p[0]), str(p[1]))
-                     for p in _params]).encode("utf-8")
-    sign = sha1(sign).hexdigest()
-    sign_type = 'SHA1'
-
-    return dict(params), sign, sign_type
+    pass
 
 
 def make_error_page(url):
@@ -149,4 +117,4 @@ def make_error_page(url):
 
 
 def is_regex(value):
-    return isinstance(value, re_type)
+    pass

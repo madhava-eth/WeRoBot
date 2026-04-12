@@ -45,7 +45,7 @@ class SaeKVDBStorage(SessionStorage):
         :param id: 要写入的 id
         :param value: 要写入的数据，可以是一个 ``dict`` 对象
         """
-        return self.kv.set(self.key_name(id), value)
+        pass
 
     def delete(self, id):
         """
@@ -53,4 +53,4 @@ class SaeKVDBStorage(SessionStorage):
 
         :param id: 要删除的数据的 id
         """
-        return self.kv.delete(self.key_name(id))
+        pass

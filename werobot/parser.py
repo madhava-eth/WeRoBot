@@ -6,8 +6,7 @@ from werobot.messages.events import EventMetaClass, UnknownEvent
 
 
 def parse_user_msg(xml):
-    message = process_message(parse_xml(xml)) if xml else None
-    return message
+    pass
 
 
 def parse_xml(text):

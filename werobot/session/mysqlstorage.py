@@ -75,16 +75,7 @@ class MySQLStorage(SessionStorage):
         :param id: 要写入的 id
         :param value: 要写入的数据，可以是一个 ``dict`` 对象
         """
-        value = json_dumps(value)
-        self.conn.cursor().execute(
-            "INSERT INTO WeRoBot (id, value) VALUES (%s,%s) \
-                ON DUPLICATE KEY UPDATE value=%s", (
-                id,
-                value,
-                value,
-            )
-        )
-        self.conn.commit()
+        pass
 
     def delete(self, id):
         """
@@ -92,5 +83,4 @@ class MySQLStorage(SessionStorage):
 
         :param id: 要删除的数据的 id
         """
-        self.conn.cursor().execute("DELETE FROM WeRoBot WHERE id=%s", (id, ))
-        self.conn.commit()
+        pass

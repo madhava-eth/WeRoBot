@@ -12,7 +12,7 @@ def renderable_named_tuple(typename, field_names, tempalte):
         @property
         def args(self):
             # https://bugs.python.org/issue24931
-            return dict(zip(self._fields, self))
+            pass
 
         def process_args(self, kwargs):
             args = defaultdict(str)
@@ -210,31 +210,7 @@ class MusicReply(WeChatReply):
 class TransferCustomerServiceReply(WeChatReply):
     @property
     def TEMPLATE(self):
-        if 'account' in self._args:
-            return to_text(
-                """
-            <xml>
-            <ToUserName><![CDATA[{target}]]></ToUserName>
-            <FromUserName><![CDATA[{source}]]></FromUserName>
-            <CreateTime>{time}</CreateTime>
-            <MsgType><![CDATA[transfer_customer_service]]></MsgType>
-            <TransInfo>
-                 <KfAccount><![CDATA[{account}]]></KfAccount>
-             </TransInfo>
-            </xml>
-            """
-            )
-        else:
-            return to_text(
-                """
-            <xml>
-            <ToUserName><![CDATA[{target}]]></ToUserName>
-            <FromUserName><![CDATA[{source}]]></FromUserName>
-            <CreateTime>{time}</CreateTime>
-            <MsgType><![CDATA[transfer_customer_service]]></MsgType>
-            </xml>
-            """
-            )
+        pass
 
 
 class SuccessReply(WeChatReply):

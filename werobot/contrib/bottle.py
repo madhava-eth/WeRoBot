@@ -34,24 +34,6 @@ def make_view(robot):
     :return: 一个标准的 Bottle view
     """
     def werobot_view(*args, **kwargs):
-        if not robot.check_signature(
-            request.query.timestamp, request.query.nonce,
-            request.query.signature
-        ):
-            return HTTPResponse(
-                status=403,
-                body=robot.make_error_page(html.escape(request.url))
-            )
-        if request.method == 'GET':
-            return request.query.echostr
-        else:
-            body = request.body.read()
-            message = robot.parse_message(
-                body,
-                timestamp=request.query.timestamp,
-                nonce=request.query.nonce,
-                msg_signature=request.query.msg_signature
-            )
-            return robot.get_encrypted_reply(message)
+        pass
 
     return werobot_view

@@ -50,11 +50,7 @@ class SQLiteStorage(SessionStorage):
         :param id: 要写入的 id
         :param value: 要写入的数据，可以是一个 ``dict`` 对象
         """
-        self.db.execute(
-            "INSERT OR REPLACE INTO WeRoBot (id, value) VALUES (?,?);",
-            (id, json_dumps(value))
-        )
-        self.db.commit()
+        pass
 
     def delete(self, id):
         """
@@ -62,5 +58,4 @@ class SQLiteStorage(SessionStorage):
 
         :param id: 要删除的数据的 id
         """
-        self.db.execute("DELETE FROM WeRoBot WHERE id=?;", (id, ))
-        self.db.commit()
+        pass

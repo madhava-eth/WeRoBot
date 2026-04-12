@@ -3,12 +3,7 @@ from werobot.utils import to_text
 
 
 def get_value(instance, path, default=None):
-    dic = instance.__dict__
-    for entry in path.split('.'):
-        dic = dic.get(entry)
-        if dic is None:
-            return default
-    return dic or default
+    pass
 
 
 class BaseEntry(object):

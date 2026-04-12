@@ -31,30 +31,7 @@ class WeixinPayClient(Client):
         :param package: 需要签名的的参数
         :return: 可以使用的packagestr
         """
-        assert self.pay_partner_id, "PAY_PARTNER_ID IS EMPTY"
-        assert self.pay_partner_key, "PAY_PARTNER_KEY IS EMPTY"
-
-        package.update({
-            'partner': self.pay_partner_id,
-        })
-
-        package.setdefault('bank_type', 'WX')
-        package.setdefault('fee_type', '1')
-        package.setdefault('input_charset', 'UTF-8')
-
-        params = package.items()
-        params.sort()
-
-        sign = md5(
-            '&'.join(
-                [
-                    "%s=%s" % (str(p[0]), str(p[1]))
-                    for p in params + [('key', self.pay_partner_key)]
-                ]
-            )
-        ).hexdigest().upper()
-
-        return urlencode(params + [('sign', sign)])
+        pass
 
     def create_js_pay_params(self, **package):
         """
@@ -72,17 +49,7 @@ class WeixinPayClient(Client):
         :param package: 需要签名的的参数
         :return: 支付需要的对象
         """
-        pay_param, sign, sign_type = self._pay_sign_dict(
-            package=self.create_js_pay_package(**package)
-        )
-        pay_param['paySign'] = sign
-        pay_param['signType'] = sign_type
-
-        # 腾讯这个还得转成大写 JS 才认
-        for key in ['appId', 'timeStamp', 'nonceStr']:
-            pay_param[key] = str(pay_param.pop(key.lower()))
-
-        return pay_param
+        pass
 
     def create_js_edit_address_param(self, accesstoken, **params):
         """
@@ -98,28 +65,7 @@ class WeixinPayClient(Client):
 
         这尼玛 你能相信这些支付接口都是腾讯出的？
         """
-        params.update(
-            {
-                'appId': self.appid,
-                'nonceStr': generate_token(8),
-                'timeStamp': int(time.time())
-            }
-        )
-
-        _params = [(k.lower(), str(v)) for k, v in params.items()]
-        _params += [('accesstoken', accesstoken)]
-        _params.sort()
-
-        string1 = '&'.join(["%s=%s" % (p[0], p[1]) for p in _params])
-        sign = sha1(string1).hexdigest()
-
-        params = dict([(k, str(v)) for k, v in params.items()])
-
-        params['addrSign'] = sign
-        params['signType'] = 'sha1'
-        params['scope'] = params.get('scope', 'jsapi_address')
-
-        return params
+        pass
 
     def create_native_pay_url(self, productid):
         """
@@ -129,12 +75,7 @@ class WeixinPayClient(Client):
         :param productid: 本地商品ID
         :return: 返回URL
         """
-
-        params, sign, = self._pay_sign_dict(productid=productid)
-
-        params['sign'] = sign
-
-        return NATIVE_BASE_URL + urlencode(params)
+        pass
 
     def pay_deliver_notify(self, **deliver_info):
         """
@@ -153,16 +94,7 @@ class WeixinPayClient(Client):
         :param 需要签名的的参数
         :return: 支付需要的对象
         """
-        params, sign, _ = self._pay_sign_dict(
-            add_noncestr=False, add_timestamp=False, **deliver_info
-        )
-
-        params['app_signature'] = sign
-        params['sign_method'] = 'sha1'
-
-        return self.post(
-            url="https://api.weixin.qq.com/pay/delivernotify", data=params
-        )
+        pass
 
     def pay_order_query(self, out_trade_no):
         """
@@ -172,32 +104,4 @@ class WeixinPayClient(Client):
         :param out_trade_no: 本地订单号
         :return: 订单信息dict
         """
-
-        package = {
-            'partner': self.pay_partner_id,
-            'out_trade_no': out_trade_no,
-        }
-
-        _package = package.items()
-        _package.sort()
-
-        s = '&'.join(
-            [
-                "%s=%s" % (p[0], str(p[1]))
-                for p in (_package + [('key', self.pay_partner_key)])
-            ]
-        )
-        package['sign'] = md5(s).hexdigest().upper()
-
-        package = '&'.join(["%s=%s" % (p[0], p[1]) for p in package.items()])
-
-        params, sign, _ = self._pay_sign_dict(
-            add_noncestr=False, package=package
-        )
-
-        params['app_signature'] = sign
-        params['sign_method'] = 'sha1'
-
-        return self.post(
-            url="https://api.weixin.qq.com/pay/orderquery", data=params
-        )
+        pass
